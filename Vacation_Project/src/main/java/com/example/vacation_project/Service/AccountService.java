@@ -3,7 +3,7 @@ package com.example.vacation_project.Service;
 import com.example.vacation_project.Dto.Response.AccountNameResponse;
 import com.example.vacation_project.Dto.Response.PostListResponse;
 import com.example.vacation_project.Dto.Response.PostResponse;
-import com.example.vacation_project.Dto.Response.PostViewResponse;
+import com.example.vacation_project.Dto.Response.PostViewRespones;
 import com.example.vacation_project.Entity.Account.Account;
 import com.example.vacation_project.Entity.Post.Post;
 import com.example.vacation_project.Entity.Post.PostRepository;
@@ -56,11 +56,11 @@ public class AccountService {
         Account account = accountUtil.getAccount();
 
         List<Post> postList = postRepository.findAllByAccountOrderByIdDesc(account,page);
-        List<PostViewResponse> postViewResponseList = new ArrayList<>();
+        List<PostViewRespones> postViewResponseList = new ArrayList<>();
 
         for(Post post : postList) {
             postViewResponseList.add(
-                    PostViewResponse.builder()
+                    PostViewRespones.builder()
                             .id(post.getId())
                             .name(post.getName())
                             .build()

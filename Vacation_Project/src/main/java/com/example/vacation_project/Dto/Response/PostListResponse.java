@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class PostListResponse {
 
-    List<PostViewResponse> postViewResponseList = new ArrayList<>();
+    List<PostViewRespones> postViewResponseList = new ArrayList<>();
 
 }

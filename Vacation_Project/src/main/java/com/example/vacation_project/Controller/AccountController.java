@@ -18,13 +18,11 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    // 계정의 name과 id를 반환
     @GetMapping("/name")
     public AccountNameResponse name() {
         return accountService.getname();
     }
 
-    // 게시글 보기
     @GetMapping("/{postId}")
     public PostResponse post(@PathVariable("postId") Long postId) {
         return accountService.getpost(postId);

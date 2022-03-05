@@ -24,16 +24,17 @@ public class PostService {
     private final PostRepository postRepository;
     private final AccountRepository accountRepository;
 
+    // 쪽지 list 보기
     public PostListResponse getPostList(String accountId, Pageable page) {
 
         Account account = accountRepository.findByAccountId(accountId)
                 .orElseThrow(NotFoundException::new);
 
         List<Post> postList = postRepository.findAllByAccountOrderByIdDesc(account, page);
-        List<PostViewRespones> viewResponesList = new ArrayList<>();
+        List<PostViewRespones> postviewResponesList = new ArrayList<>();
 
         for(Post post : postList) {
-            viewResponesList.add(
+            postviewResponesList.add(
                     PostViewRespones.builder()
                             .id(post.getId())
                             .name(post.getName())
@@ -41,12 +42,11 @@ public class PostService {
             );
         }
 
-        return PostListResponse.builder()
-                .postViewResponseList(viewResponesList)
-                .build();
+        return new PostListResponse(postviewResponesList);
 
     }
 
+    // 쪽지 생성
     public PostIdResponse savePost(PostRequst requst, String accountId) {
 
         Account account = accountRepository.findByAccountId(accountId)
@@ -60,9 +60,6 @@ public class PostService {
                         .build()
         ).getId();
 
-        return PostIdResponse.builder()
-                .id(id)
-                .build();
-
+        return new PostIdResponse(id);
     }
 }

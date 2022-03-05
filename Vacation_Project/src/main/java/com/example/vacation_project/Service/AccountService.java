@@ -21,7 +21,6 @@ import java.util.List;
 @Service
 public class AccountService {
 
-    private final AuthenticationUtil authenticationUtil;
     private final AccountUtil accountUtil;
 
     private final PostRepository postRepository;
@@ -38,7 +37,7 @@ public class AccountService {
 
     }
 
-    // 쪽지 하나의 name과 내용을 보여줌
+    // 쪽지 상세보기
     public PostResponse getpost(Long postId) {
 
         Post post = postRepository.findById(postId)
@@ -67,9 +66,7 @@ public class AccountService {
             );
         }
 
-        return PostListResponse.builder()
-                .postViewResponseList(postViewResponseList)
-                .build();
+        return new PostListResponse(postViewResponseList);
 
     }
 

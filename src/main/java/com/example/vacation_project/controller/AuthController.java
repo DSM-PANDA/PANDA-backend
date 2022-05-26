@@ -2,6 +2,7 @@ package com.example.vacation_project.controller;
 
 import com.example.vacation_project.dto.reqest.AccountReqest;
 import com.example.vacation_project.dto.JwtToken;
+import com.example.vacation_project.dto.reqest.LoginRequest;
 import com.example.vacation_project.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.CREATED)
-    public JwtToken login(@Valid @RequestBody AccountReqest reqest) {
+    public JwtToken login(@Valid @RequestBody LoginRequest reqest) {
         return authService.login(reqest);
     }
 

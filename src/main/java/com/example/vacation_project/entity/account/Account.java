@@ -23,6 +23,6 @@ public class Account {
     private String accountId;
 
     @Column(name = "account_pwd",nullable = false)
-    private String pwd;
+    private String password;
 
 }

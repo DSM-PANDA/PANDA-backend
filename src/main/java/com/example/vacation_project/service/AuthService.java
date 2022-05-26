@@ -2,6 +2,7 @@ package com.example.vacation_project.service;
 
 import com.example.vacation_project.dto.reqest.AccountReqest;
 import com.example.vacation_project.dto.JwtToken;
+import com.example.vacation_project.dto.reqest.LoginRequest;
 import com.example.vacation_project.entity.account.Account;
 import com.example.vacation_project.entity.account.AccountRepository;
 import com.example.vacation_project.entity.refreshToken.RefreshToken;
@@ -9,6 +10,7 @@ import com.example.vacation_project.entity.refreshToken.RefreshTokenRepository;
 import com.example.vacation_project.exception.ConflictException;
 import com.example.vacation_project.exception.NotFoundException;
 import com.example.vacation_project.exception.UnauthorizedException;
+import com.example.vacation_project.facade.AccountFacade;
 import com.example.vacation_project.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -24,19 +27,16 @@ public class AuthService {
     private final AccountRepository accountRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AccountFacade accountFacade;
 
+    public JwtToken login (LoginRequest reqest) {
 
-    // 로그인
-    public JwtToken login (AccountReqest reqest) {
+        Account account = accountFacade.findByAccountId(reqest.getAccountId());
 
-        Account account = accountRepository.findByAccountId(reqest.getAccountId())
-                .orElseThrow(NotFoundException::new);
-
-        if(!encoder.matches(reqest.getPwd(), account.getPwd())) {
+        if(!encoder.matches(reqest.getPassword(), account.getPassword())) {
             throw new NotFoundException();
         }
 
-        // 토큰 발행
         return JwtToken.builder()
                 .accessToken(jwtTokenProvider.generateAccessToken(account.getAccountId()))
                 .refreshToken(jwtTokenProvider.getRefreshToken(account.getAccountId()))
@@ -44,19 +44,16 @@ public class AuthService {
 
     }
 
-    // 회원가입
     public JwtToken signup (AccountReqest reqest) {
 
-        // 회원정보 저장
         String accountId = accountRepository.save(
                 Account.builder()
                         .name(reqest.getName())
                         .accountId(reqest.getAccountId())
-                        .pwd(encoder.encode(reqest.getPwd()))
+                        .password(encoder.encode(reqest.getPassword()))
                         .build()
         ).getAccountId();
 
-        // 토큰 발행
         return JwtToken.builder()
                 .accessToken(jwtTokenProvider.generateAccessToken(accountId))
                 .refreshToken(jwtTokenProvider.getRefreshToken(accountId))
@@ -64,8 +61,6 @@ public class AuthService {
 
     }
 
-    // 토큰 재발급
-    @Transactional
     public JwtToken tokenRefresh(JwtToken jwtToken) {
 
         Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken.getAccessToken());
@@ -89,7 +84,6 @@ public class AuthService {
 
     }
 
-    // 아이디 중복 확인하기
     public void id(String accountId) {
 
         if(accountRepository.existsByAccountId(accountId)) {

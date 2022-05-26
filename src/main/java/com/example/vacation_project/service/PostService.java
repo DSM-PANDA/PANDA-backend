@@ -9,6 +9,7 @@ import com.example.vacation_project.entity.account.AccountRepository;
 import com.example.vacation_project.entity.post.Post;
 import com.example.vacation_project.entity.post.PostRepository;
 import com.example.vacation_project.exception.NotFoundException;
+import com.example.vacation_project.facade.AccountFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,11 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final AccountRepository accountRepository;
+    private final AccountFacade accountFacade;
 
-    // 쪽지 list 보기
     public PostListResponse getPostList(String accountId, Pageable page) {
 
-        Account account = accountRepository.findByAccountId(accountId)
-                .orElseThrow(NotFoundException::new);
-
-        List<Post> postList = postRepository.findAllByAccountOrderByIdDesc(account, page);
+        List<Post> postList = postRepository.findAllByAccountOrderByIdDesc(accountFacade.findByAccountId(accountId), page);
         List<PostViewRespones> postviewResponesList = new ArrayList<>();
 
         for(Post post : postList) {
@@ -46,20 +44,17 @@ public class PostService {
 
     }
 
-    // 쪽지 생성
     public PostIdResponse savePost(PostRequst requst, String accountId) {
-
-        Account account = accountRepository.findByAccountId(accountId)
-                .orElseThrow(NotFoundException::new);
 
         return new PostIdResponse(
                 postRepository.save(
                     Post.builder()
                         .name(requst.getName())
                         .content(requst.getContent())
-                        .account(account)
+                        .account(accountFacade.findByAccountId(accountId))
                         .build()
                 ).getId()
         );
+
     }
 }

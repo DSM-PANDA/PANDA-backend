@@ -21,10 +21,8 @@ import java.util.List;
 public class AccountService {
 
     private final AccountUtil accountUtil;
-
     private final PostRepository postRepository;
 
-    // 대나무 위의 이름을 반환
     public AccountNameResponse getname() {
 
         Account account = accountUtil.getAccount();
@@ -36,7 +34,6 @@ public class AccountService {
 
     }
 
-    // 쪽지 상세보기
     public PostResponse getpost(Long postId) {
 
         Post post = postRepository.findById(postId)
@@ -48,7 +45,6 @@ public class AccountService {
                 .build();
     }
 
-    // my 페이지 게시글 반환
     public PostListResponse getpostList(Pageable page) {
 
         Account account = accountUtil.getAccount();

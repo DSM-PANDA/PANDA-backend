@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -19,7 +20,8 @@ public class AccountReqest {
     private String accountId;
 
     @NotBlank
-    @Size(min = 6, max = 20)
-    private String pwd;
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,20}$",
+            message = "영어, 숫자, 특수문자가 포함되어야 합니다.")
+    private String password;
 
 }

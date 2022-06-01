@@ -24,12 +24,12 @@ public class AccountController {
     }
 
     @GetMapping("/{postId}")
-    public PostResponse post(@PathVariable("postId") Long postId) {
+    public PostResponse getpost(@PathVariable("postId") Long postId) {
         return accountService.getpost(postId);
     }
 
     @GetMapping("/post")
-    public PostListResponse postlist(Pageable page) {
+    public PostListResponse getpostlist(Pageable page) {
         return accountService.getpostList(page);
     }
 

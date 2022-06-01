@@ -12,10 +12,12 @@ import com.example.vacation_project.service.util.AccountUtil;
 import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class AccountService {

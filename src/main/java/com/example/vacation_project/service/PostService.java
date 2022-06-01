@@ -3,12 +3,9 @@ package com.example.vacation_project.service;
 import com.example.vacation_project.dto.reqest.PostRequst;
 import com.example.vacation_project.dto.response.PostIdResponse;
 import com.example.vacation_project.dto.response.PostListResponse;
-import com.example.vacation_project.dto.response.PostViewRespones;
 import com.example.vacation_project.entity.account.Account;
-import com.example.vacation_project.entity.account.AccountRepository;
 import com.example.vacation_project.entity.post.Post;
 import com.example.vacation_project.entity.post.PostRepository;
-import com.example.vacation_project.exception.NotFoundException;
 import com.example.vacation_project.facade.AccountFacade;
 import com.example.vacation_project.facade.PostFacade;
 import com.example.vacation_project.service.util.PostUtil;
@@ -17,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor

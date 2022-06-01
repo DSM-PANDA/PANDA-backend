@@ -1,6 +1,6 @@
 package com.example.vacation_project.controller;
 
-import com.example.vacation_project.dto.response.AccountNameResponse;
+import com.example.vacation_project.dto.response.AccountIdResponse;
 import com.example.vacation_project.dto.response.PostListResponse;
 import com.example.vacation_project.dto.response.PostResponse;
 import com.example.vacation_project.service.AccountService;
@@ -18,9 +18,9 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @GetMapping("/name")
-    public AccountNameResponse name() {
-        return accountService.getname();
+    @GetMapping
+    public AccountIdResponse getAccountId() {
+        return accountService.getAccountId();
     }
 
     @GetMapping("/{postId}")

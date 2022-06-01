@@ -48,7 +48,7 @@ public class AccountService {
 
         return PostListResponse.builder()
                 .accountName(account.getName())
-                .postViewResponseList(postRespones)
+                .postRespones(postRespones)
                 .build();
 
     }

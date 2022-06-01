@@ -2,20 +2,17 @@ package com.example.vacation_project.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
-
+@Getter
 @Builder
 @AllArgsConstructor
 public class PostResponse {
 
-    @NotBlank
-    private Long id;
+    private final Long id;
 
-    @NotBlank
-    private String name;
+    private final String name;
 
-    @NotBlank
-    private String content;
+    private final String content;
 
 }

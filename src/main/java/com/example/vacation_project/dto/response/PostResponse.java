@@ -9,8 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PostResponse {
 
-    private final Long id;
-
     private final String name;
 
     private final String content;

@@ -10,6 +10,7 @@ import com.example.vacation_project.entity.post.Post;
 import com.example.vacation_project.entity.post.PostRepository;
 import com.example.vacation_project.exception.NotFoundException;
 import com.example.vacation_project.facade.AccountFacade;
+import com.example.vacation_project.facade.PostFacade;
 import com.example.vacation_project.service.util.PostUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -25,16 +26,15 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final AccountRepository accountRepository;
     private final AccountFacade accountFacade;
+    private final PostFacade postFacade;
     private final PostUtil postUtil;
 
     public PostListResponse getPostList(String accountId, Pageable page) {
 
-        List<Post> postList = postRepository.findAllByAccountOrderByIdDesc(accountFacade.findByAccountId(accountId), page);
-        List<PostViewRespones> postviewResponesList = new ArrayList<>();
+        Account account = accountFacade.findByAccountId(accountId);
 
-        List<Post> postList = postRepository.findAllByAccountOrderByIdDesc(account, page);
+        List<Post> postList = postFacade.findAllByAccountOrderByIdDesc(account, page);
         List<PostListResponse.PostRespones> postRespones = postUtil.getPostList(postList);
 
         return new PostListResponse(postviewResponesList);

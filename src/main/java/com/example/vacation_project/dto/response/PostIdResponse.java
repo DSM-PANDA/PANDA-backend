@@ -1,15 +1,12 @@
 package com.example.vacation_project.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
-
-@Builder
+@Getter
 @AllArgsConstructor
 public class PostIdResponse {
 
-    @NotBlank
-    private Long id;
+    private final Long id;
 
 }

@@ -37,7 +37,10 @@ public class PostService {
         List<Post> postList = postFacade.findAllByAccountOrderByIdDesc(account, page);
         List<PostListResponse.PostRespones> postRespones = postUtil.getPostList(postList);
 
-        return new PostListResponse(postviewResponesList);
+        return PostListResponse.builder()
+                .accountName(account.getName())
+                .postRespones(postRespones)
+                .build();
 
     }
 

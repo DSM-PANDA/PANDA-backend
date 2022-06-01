@@ -13,7 +13,7 @@ public class PostListResponse {
 
     private final String accountName;
 
-    List<PostRespones> postViewResponseList;
+    List<PostRespones> postRespones;
 
     @Builder
     @Getter

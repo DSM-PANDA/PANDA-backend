@@ -41,9 +41,9 @@ public class AuthController {
         return authService.tokenRefresh(jwtToken);
     }
 
-    @PatchMapping("/{accountId}")
-    public void id(@PathVariable("accountId") String accountId) {
-        authService.id(accountId);
+    @GetMapping("/{accountId}")
+    public void existsByAccountId(@PathVariable("accountId") String accountId) {
+        authService.existsByAccountId(accountId);
     }
 
 }

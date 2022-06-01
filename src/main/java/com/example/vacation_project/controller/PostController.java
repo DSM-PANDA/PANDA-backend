@@ -27,7 +27,7 @@ public class PostController {
     }
 
     @GetMapping
-    public PostListResponse postList(@PathVariable("accountId") String accountId, Pageable page) {
+    public PostListResponse gePostList(@PathVariable("accountId") String accountId, Pageable page) {
         return postService.getPostList(accountId, page);
     }
 

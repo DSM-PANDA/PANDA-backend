@@ -13,4 +13,16 @@ public class PostListResponse {
 
     private final String accountName;
 
+    List<PostRespones> postViewResponseList;
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    public static class PostRespones {
+
+        private final Long id;
+
+        private final String name;
+
+    }
 }

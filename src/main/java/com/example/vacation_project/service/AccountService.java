@@ -1,13 +1,11 @@
 package com.example.vacation_project.service;
 
-import com.example.vacation_project.dto.response.AccountNameResponse;
+import com.example.vacation_project.dto.response.AccountIdResponse;
 import com.example.vacation_project.dto.response.PostListResponse;
 import com.example.vacation_project.dto.response.PostResponse;
-import com.example.vacation_project.dto.response.PostViewRespones;
 import com.example.vacation_project.entity.account.Account;
 import com.example.vacation_project.entity.post.Post;
 import com.example.vacation_project.facade.PostFacade;
-import com.example.vacation_project.exception.NotFoundException;
 import com.example.vacation_project.service.util.AccountUtil;
 import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
@@ -44,18 +42,21 @@ public class AccountService {
         Account account = accountUtil.getAccount();
 
         List<Post> postList = postFacade.findAllByAccountOrderByIdDesc(account, page);
-        List<PostViewRespones> postViewResponseList = new ArrayList<>();
+        List<PostListResponse.PostRespones> postRespones = new ArrayList<>();
 
         for(Post post : postList) {
-            postViewResponseList.add(
-                    PostViewRespones.builder()
+            postRespones.add(
+                    PostListResponse.PostRespones.builder()
                             .id(post.getId())
                             .name(post.getName())
                             .build()
             );
         }
 
-        return new PostListResponse(postViewResponseList);
+        return PostListResponse.builder()
+                .accountName(account.getName())
+                .postViewResponseList(postRespones)
+                .build();
 
     }
 

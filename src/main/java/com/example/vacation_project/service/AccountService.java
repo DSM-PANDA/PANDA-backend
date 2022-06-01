@@ -25,15 +25,8 @@ public class AccountService {
     private final AccountUtil accountUtil;
     private final PostFacade postFacade;
 
-    public AccountNameResponse getname() {
-
-        Account account = accountUtil.getAccount();
-
-        return AccountNameResponse.builder()
-                .accountId(account.getAccountId())
-                .accountName(account.getName())
-                .build();
-
+    public AccountIdResponse getAccountId() {
+        return new AccountIdResponse(accountUtil.getAccountId());
     }
 
     public PostResponse getpost(Long postId) {

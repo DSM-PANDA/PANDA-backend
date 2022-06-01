@@ -7,6 +7,7 @@ import com.example.vacation_project.entity.account.Account;
 import com.example.vacation_project.entity.post.Post;
 import com.example.vacation_project.facade.PostFacade;
 import com.example.vacation_project.service.util.AccountUtil;
+import com.example.vacation_project.service.util.PostUtil;
 import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class AccountService {
 
     private final AccountUtil accountUtil;
     private final PostFacade postFacade;
+    private final PostUtil postUtil;
 
     public AccountIdResponse getAccountId() {
         return new AccountIdResponse(accountUtil.getAccountId());
@@ -42,16 +44,7 @@ public class AccountService {
         Account account = accountUtil.getAccount();
 
         List<Post> postList = postFacade.findAllByAccountOrderByIdDesc(account, page);
-        List<PostListResponse.PostRespones> postRespones = new ArrayList<>();
-
-        for(Post post : postList) {
-            postRespones.add(
-                    PostListResponse.PostRespones.builder()
-                            .id(post.getId())
-                            .name(post.getName())
-                            .build()
-            );
-        }
+        List<PostListResponse.PostRespones> postRespones = postUtil.getPostList(postList);
 
         return PostListResponse.builder()
                 .accountName(account.getName())

@@ -14,13 +14,14 @@ import com.example.vacation_project.service.util.PostUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-
+@Transactional
 public class PostService {
 
     private final PostRepository postRepository;

@@ -36,10 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
 
                 .authorizeRequests()
-                .antMatchers(HttpMethod.PUT,"/auth/reissue").authenticated()
-                .antMatchers(HttpMethod.GET,"/account/name").authenticated()
                 .antMatchers(HttpMethod.GET,"/account/**").authenticated()
-                .antMatchers(HttpMethod.GET,"/account/post").authenticated()
                 .anyRequest().permitAll()
 
                 .and().apply(new FilterConfig(jwtTokenProvider));

@@ -18,7 +18,7 @@ public class DetailsService implements UserDetailsService {
 
         return accountRepository.findByAccountId(id)
                 .map(Details::new)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("user 정보를 찾을 수 없습니다"));
     }
 
 }

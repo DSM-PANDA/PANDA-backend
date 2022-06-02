@@ -63,18 +63,20 @@ public class AuthService {
 
     public JwtToken refreshToken(JwtToken jwtToken) {
 
-        Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken.getAccessToken());
-
-        RefreshToken refreshToken = refreshTokenRepository.findById(authentication.getName())
-                .orElseThrow(NotFoundException::new);
-
-        if (!refreshToken.getRefreshToken().equals(jwtToken.getRefreshToken())) {
-            throw new UnauthorizedException();
+        if(jwtTokenProvider.validateToken(jwtToken.getAccessToken())) {
+            throw new UnauthorizedException("access 토큰이 유효합니다");
         }
+
+        if (!jwtTokenProvider.isRefreshToken(jwtToken.getRefreshToken())) {
+            throw new UnauthorizedException("refres 토큰을 확인해 주세요");
+        }
+
+        RefreshToken refreshToken = refreshTokenRepository.findById(jwtToken.getRefreshToken())
+                .orElseThrow(() -> new NotFoundException("일치하는 토큰을 찾을 수 없습니다."));
 
         JwtToken token = JwtToken.builder()
                 .refreshToken(refreshToken.getRefreshToken())
-                .accessToken(jwtTokenProvider.generateAccessToken(authentication.getName()))
+                .accessToken(jwtTokenProvider.generateAccessToken(refreshToken.getId()))
                 .build();
 
         RefreshToken newRefreshToken = refreshToken.update(token.getRefreshToken());

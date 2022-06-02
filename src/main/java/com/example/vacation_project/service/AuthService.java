@@ -84,7 +84,7 @@ public class AuthService {
 
     }
 
-    public void id(String accountId) {
+    public void existsByAccountId(String accountId) {
 
         if(accountRepository.existsByAccountId(accountId)) {
             throw new ConflictException();

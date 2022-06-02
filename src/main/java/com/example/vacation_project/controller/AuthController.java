@@ -38,7 +38,7 @@ public class AuthController {
 
     @PutMapping("/reissue")
     public JwtToken reissue(@Valid @RequestBody JwtToken jwtToken) {
-        return authService.tokenRefresh(jwtToken);
+        return authService.refreshToken(jwtToken);
     }
 
     @GetMapping("/{accountId}")

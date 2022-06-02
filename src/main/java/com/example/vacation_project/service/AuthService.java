@@ -61,7 +61,7 @@ public class AuthService {
 
     }
 
-    public JwtToken tokenRefresh(JwtToken jwtToken) {
+    public JwtToken refreshToken(JwtToken jwtToken) {
 
         Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken.getAccessToken());
 

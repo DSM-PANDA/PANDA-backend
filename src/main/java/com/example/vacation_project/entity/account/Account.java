@@ -26,11 +26,10 @@ public class Account {
     @Column(name = "account_name", nullable = false,length = 10)
     private String name;
 
-
     @Column(name = "account_Id",nullable = false, length = 10)
     private String accountId;
 
-    @Column(name = "account_pwd",nullable = false)
+    @Column(name = "account_pwd",nullable = false, length = 60)
     private String password;
 
 }

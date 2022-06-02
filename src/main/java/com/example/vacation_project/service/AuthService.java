@@ -34,7 +34,7 @@ public class AuthService {
         Account account = accountFacade.findByAccountId(reqest.getAccountId());
 
         if(!encoder.matches(reqest.getPassword(), account.getPassword())) {
-            throw new NotFoundException();
+            throw new ConflictException("비밀번호가 일치하지 않습니다");
         }
 
         return JwtToken.builder()
@@ -85,11 +85,9 @@ public class AuthService {
     }
 
     public void existsByAccountId(String accountId) {
-
         if(accountRepository.existsByAccountId(accountId)) {
-            throw new ConflictException();
+            throw new ConflictException("중복된 아이디입니다.");
         }
-
     }
 
 

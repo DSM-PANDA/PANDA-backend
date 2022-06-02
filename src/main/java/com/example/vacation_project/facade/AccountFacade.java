@@ -14,7 +14,7 @@ public class AccountFacade {
 
     public Account findByAccountId(String accountId) {
         return accountRepository.findByAccountId(accountId)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("user 정보를 찾을 수 없습니다."));
     }
 
 }

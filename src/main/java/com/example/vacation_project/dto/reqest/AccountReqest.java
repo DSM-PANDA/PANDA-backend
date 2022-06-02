@@ -20,7 +20,7 @@ public class AccountReqest {
     private String accountId;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,20}$")
+    @Pattern(regexp = "(?=.*[a-z])(?=.*[0-9])(?=.*[!#$%&'()*+,./:;<=>?@＼^_`{|}~])[a-zA-Z0-9!#$%&'()*+,./:;\" +\n" + "\"<=>?@＼^_`{|}~]{6,20}$")
     private String password;
 
 }

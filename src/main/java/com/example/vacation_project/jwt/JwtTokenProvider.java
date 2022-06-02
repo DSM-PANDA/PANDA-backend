@@ -6,6 +6,7 @@ import com.example.vacation_project.entity.refreshToken.RefreshToken;
 import com.example.vacation_project.entity.refreshToken.RefreshTokenRepository;
 import com.example.vacation_project.exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -85,6 +86,15 @@ public class JwtTokenProvider {
 
     }
 
+    public boolean isRefreshToken(String token) {
+        try {
+            return getHeader(token).get("typ").equals("refresh_token");
+        } catch (Exception e) {
+            throw new UnauthorizedException("토큰을 확인해 주세요");
+        }
+    }
+
+
     // 토큰의 Body를 불러옴
     private Claims getBody(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
@@ -97,6 +107,11 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             throw new UnauthorizedException();
         }
+    }
+
+    private JwsHeader getHeader(String token) {
+        return Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getHeader();
     }
 
 }

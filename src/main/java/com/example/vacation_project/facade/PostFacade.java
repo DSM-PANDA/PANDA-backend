@@ -18,7 +18,7 @@ public class PostFacade {
 
     public Post findByPostId(Long postId) {
         return postRepository.findById(postId)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다"));
     }
 
     public List<Post> findAllByAccountOrderByIdDesc(Account account, Pageable page) {

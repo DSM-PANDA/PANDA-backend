@@ -2,10 +2,12 @@ package com.example.vacation_project.service.util;
 
 import com.example.vacation_project.dto.response.PostListResponse;
 import com.example.vacation_project.entity.post.Post;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PostUtil {
 
     public List<PostListResponse.PostRespones> getPostList(List<Post> postList) {

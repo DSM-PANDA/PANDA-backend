@@ -18,14 +18,14 @@ public class AccountUtil {
     public String getAccountId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("권한이 존재하지 않습니다");
         }
         return authentication.getName();
     }
 
     public Account getAccount() {
         return accountRepository.findByAccountId(getAccountId())
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("일치하는 user 아이디를 찾을 수 없습니다"));
     }
 
 }

@@ -81,7 +81,7 @@ public class JwtTokenProvider {
         try {
             return getBody(token).getExpiration().after(new Date());
         } catch (Exception e) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("토큰을 확인해 주세요");
         }
 
     }
@@ -105,7 +105,7 @@ public class JwtTokenProvider {
         try {
             return getBody(token).getSubject();
         } catch (Exception e) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("토큰을 확인해 주세요");
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.vacation_project.config;
 
+import com.example.vacation_project.exception.handler.AuthenticationEntryPointImpl;
 import com.example.vacation_project.jwt.FilterConfig;
 import com.example.vacation_project.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final AuthenticationEntryPointImpl authenticationEntryPoint;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
@@ -38,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/account/**").authenticated()
                 .anyRequest().permitAll()
-
+                .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
                 .and().apply(new FilterConfig(jwtTokenProvider));
     }
 

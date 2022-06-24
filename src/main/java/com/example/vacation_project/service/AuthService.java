@@ -71,7 +71,7 @@ public class AuthService {
             throw new UnauthorizedException("refres 토큰을 확인해 주세요");
         }
 
-        RefreshToken refreshToken = refreshTokenRepository.findById(jwtToken.getRefreshToken())
+        RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(jwtToken.getRefreshToken())
                 .orElseThrow(() -> new NotFoundException("일치하는 토큰을 찾을 수 없습니다."));
 
         JwtToken token = JwtToken.builder()
@@ -91,6 +91,5 @@ public class AuthService {
             throw new ConflictException("중복된 아이디입니다.");
         }
     }
-
 
 }

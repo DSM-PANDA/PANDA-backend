@@ -77,13 +77,12 @@ public class JwtTokenProvider {
 
     // 토큰의 유효성 검증
     public boolean validateToken(String token) {
-
         try {
-            return getBody(token).getExpiration().after(new Date());
-        } catch (Exception e) {
-            throw new UnauthorizedException("토큰을 확인해 주세요");
+            getBody(token).getExpiration().after(new Date());
+            return true;
+        } catch (UnauthorizedException e) {
+            return false;
         }
-
     }
 
     public boolean isRefreshToken(String token) {

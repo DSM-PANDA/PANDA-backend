@@ -1,5 +1,6 @@
 package com.example.vacation_project.jwt;
 
+import com.example.vacation_project.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         if(token != null && jwtTokenProvider.validateToken(token)){
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            throw new UnauthorizedException("토큰을 확인해 주세요");
         }
         filterChain.doFilter(request, response);
 

@@ -28,11 +28,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
 
         // 유효한 토큰일때 SecurityContext에 ID저장
-        if(token != null && jwtTokenProvider.validateToken(token)){
+        if(token != null){
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            throw new UnauthorizedException("토큰을 확인해 주세요");
         }
         filterChain.doFilter(request, response);
 
